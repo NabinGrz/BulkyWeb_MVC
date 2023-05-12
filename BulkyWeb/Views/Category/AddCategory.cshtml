@@ -1,0 +1,51 @@
+﻿@model BulkyWeb.Models.DomainModel.Category;
+
+@*<div class="container">
+    <form method="post">
+        <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" aps-for="CategoryName" />
+        </div>
+        <div class="py-3">
+            <label>Category Order</label>
+            <input type="text" class="form-control" id="name" aps-for="CategoryOrder" />
+        </div>
+        <div class="py-5">
+            <button class="btn btn-primary" type="submit">Submit</button>
+        </div>
+    </form>
+</div>*@
+<div class="container border border-2 shadow-sm rounded-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Add Category</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="Category" asp-action="AddCategory" class="btn btn-dark">
+                <i class="bi bi-plus-circle"></i> Add New Category
+            </a>
+        </div>
+        @*<div asp-validation-summary="All"></div>*@
+        <form method="post">
+            <div class="mb-3">
+                <label asp-for="CategoryName" class="form-label"></label>
+                <input class="form-control" id="name" asp-for="CategoryName" />
+                <span asp-validation-for="CategoryName" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="CategoryOrder" class="form-label"></label>
+                <input class="form-control" id="displayName" asp-for="CategoryOrder" />
+                <span asp-validation-for="CategoryOrder" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary form-control">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    @*Adding scripts(provided default) in the page where we want client side validation*@
+    @section Scripts{
+        @{
+            <partial name="_ValidationScriptsPartial" />
+        }
+    }

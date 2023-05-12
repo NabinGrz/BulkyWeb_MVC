@@ -1,0 +1,30 @@
+﻿@model BulkyWeb.Models.DomainModel.Category;
+
+<div class="container border border-2 shadow-sm rounded-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Edit Category</h2>
+        </div>
+        <form method="post">
+            <div class="mb-3">
+                <label asp-for="CategoryName" class="form-label"></label>
+                <input class="form-control" id="name" asp-for="CategoryName" />
+                <span asp-validation-for="CategoryName" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="CategoryOrder" class="form-label"></label>
+                <input class="form-control" id="displayName" asp-for="CategoryOrder" />
+                <span asp-validation-for="CategoryOrder" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary form-control"><i class="bi bi-pencil-fill"></i> Update</button>
+            </div>
+        </form>
+    </div>
+
+    @*Adding scripts(provided default) in the page where we want client side validation*@
+    @section Scripts{
+        @{
+            <partial name="_ValidationScriptsPartial" />
+        }
+    }
