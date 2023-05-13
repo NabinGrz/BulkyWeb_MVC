@@ -1,10 +1,13 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace BulkyWeb.Models.ViewModel
+namespace Bulky.Models.DomainModel
 {
-    public class AddCategoryRequest
+    public class Category
     {
+        [Key]
+        public Guid ID { get; set; }
+
         [Required]
         [DisplayName("Category Name")]
         public string CategoryName { get; set; }

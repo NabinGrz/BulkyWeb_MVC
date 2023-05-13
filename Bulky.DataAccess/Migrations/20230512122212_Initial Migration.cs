@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace BulkyWeb.Migrations
+namespace Bulky.DataAccess.Migrations
 {
     /// <inheritdoc />
     public partial class InitialMigration : Migration
@@ -27,7 +27,7 @@ namespace BulkyWeb.Migrations
             migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "ID", "CategoryName", "CategoryOrder" },
-                values: new object[] { new Guid("0133763b-d135-40a8-b213-67315d8d9245"), "Action", 1 });
+                values: new object[] { new Guid("9d0a3b5a-067a-45c7-87d4-23e5d87eacc0"), "Action", 1 });
         }
 
         /// <inheritdoc />

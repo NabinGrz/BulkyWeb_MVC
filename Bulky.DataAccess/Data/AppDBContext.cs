@@ -1,8 +1,8 @@
-﻿using BulkyWeb.Models.DomainModel;
+﻿using Bulky.Models.DomainModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace BulkyWeb.Data
+namespace Bulky.DataAcess.Data
 {
     public class AppDBContext : DbContext
     {

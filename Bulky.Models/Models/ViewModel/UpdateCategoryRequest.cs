@@ -1,13 +1,10 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 
-namespace BulkyWeb.Models.DomainModel
+namespace Bulky.Models.ViewModel
 {
-    public class Category
+    public class UpdateCategoryRequest
     {
-        [Key]
-        public Guid ID { get; set; }
-
         [Required]
         [DisplayName("Category Name")]
         public string CategoryName { get; set; }

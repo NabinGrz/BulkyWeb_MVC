@@ -1,0 +1,21 @@
+﻿@*This is a partial view, we have created for notification showing, which can be viewed in all of the views created*@
+@*To use a created partial view in all of the other views
+(add this line in "_Layout.cshtml" above "@RenderBody()") -> "<partial name="_Notification"/>"*@
+
+@*Added from https://codeseven.github.io/toastr/*@
+@if (TempData["success"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script type="text/javascript">
+        toastr.success('@TempData["success"]');
+    </script>
+}
+@if (TempData["error"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"></script>
+    <script type="text/javascript">
+        toastr.success('@TempData["error"]');
+    </script>
+}

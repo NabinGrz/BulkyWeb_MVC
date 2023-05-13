@@ -1,9 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
-namespace BulkyWeb.Models.ViewModel
+namespace Bulky.Models.ViewModel
 {
-    public class UpdateCategoryRequest
+    public class AddCategoryRequest
     {
         [Required]
         [DisplayName("Category Name")]
