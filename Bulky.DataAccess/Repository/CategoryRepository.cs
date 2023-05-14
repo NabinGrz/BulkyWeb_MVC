@@ -22,10 +22,6 @@ namespace Bulky.DataAccess.Repository
         {
             this._appDBContext = appDBContext;
         }
-        public void Save()
-        {
-            _appDBContext.SaveChanges();
-        }
 
         public void Update(Category category)
         {

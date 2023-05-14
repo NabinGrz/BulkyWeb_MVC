@@ -6,8 +6,9 @@ using Bulky.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace BulkyWeb.Controllers
+namespace BulkyWeb.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CategoryController : Controller
     {
         /**
@@ -21,22 +22,34 @@ namespace BulkyWeb.Controllers
 
         /**
          Now, we are using Repository
-         **/
-        private readonly ICategoryRepository _categoryRepo;
-        List<Category> _categoriesList;
+         private readonly ICategoryRepository _categoryRepo;
 
         public CategoryController(ICategoryRepository appDBContext)
         {
             this._categoryRepo = appDBContext;
         }
+         **/
 
+        //**NOTE** Here, Unit of Work is the Repository that will have our Repository(Eg: CategoryRepository) for specific models which further extends Main Repository
+        private readonly IUnitOfWork _unitOfWork;
+
+        List<Category> _categoriesList;
+
+
+        public CategoryController(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
         //------------------------ALL THE ACTIONS---------------------------------------
         [HttpGet]
         public async Task<IActionResult> Index()
         {
             //**Using DB Context Directly  this._categoriesList = await _categoryRepo.Categories.ToListAsync();
-            this._categoriesList = _categoryRepo.GetAll().ToList();
-            return View(this._categoriesList);
+            //**Using Category Repo this._categoriesList = _categoryRepo.GetAll().ToList();
+
+            //**Using Unit of Work**
+            _categoriesList = _unitOfWork.Category.GetAll().ToList();
+            return View(_categoriesList);
         }
         [HttpGet]
         public IActionResult AddCategory()
@@ -64,9 +77,16 @@ namespace BulkyWeb.Controllers
                 //**Using DB Context Directly  _categoryRepo.Categories.Add(category);
                 //**Using DB Context Directly  await _categoryRepo.SaveChangesAsync();
 
-                /**Using the Category Repository**/
+                /**
+                 Using the Category Repository
                 _categoryRepo.Add(category);
                 _categoryRepo.Save();
+                **/
+
+                //**Using Unit of Work**
+                _unitOfWork.Category.Add(category);
+                _unitOfWork.Save();
+
                 TempData["success"] = "Category Created Successfully!!";
                 return RedirectToAction("Index");
             }
@@ -81,8 +101,13 @@ namespace BulkyWeb.Controllers
             //Category? category2 = _appDBContext.Categories.FirstOrDefault(u => u.CategoryName == "CategoryName");//It works on any value
             //Category? category3 = _appDBContext.Categories.Where(u => u.CategoryName == "CategoryName").FirstOrDefault();
 
-            /**Using the Category Repository**/
+            /**
+            Using the Category Repository
             Category? category = _categoryRepo.GetT(u => u.ID == id);
+            **/
+
+            //**Using Unit of Work**
+            Category? category = _unitOfWork.Category.GetT(u => u.ID == id);
             if (category == null)
             {
                 return NotFound();
@@ -108,9 +133,15 @@ namespace BulkyWeb.Controllers
             }
             if (ModelState.IsValid)
             {
-                /**Using the Category Repository**/
+                /**
+                 Using the Category Repository
                 _categoryRepo.Update(updateCategoryRequest);
-                 _categoryRepo.Save();
+                _categoryRepo.Save();
+                **/
+
+                //**Using Unit of Work**
+                _unitOfWork.Category.Update(updateCategoryRequest);
+                _unitOfWork.Save();
                 TempData["success"] = "Category Updtaed Successfully!!";
                 return RedirectToAction("Index");
             }
@@ -128,8 +159,13 @@ namespace BulkyWeb.Controllers
         {
             //**Using DB Context Directly -> Category? category = await _categoryRepo.Categories.FindAsync(id);
 
-            /**Using the Category Repository**/
+            /**
+             Using the Category Repository
             Category? category = _categoryRepo.GetT(u => u.ID == id);
+            **/
+
+            //**Using Unit of Work**
+            Category? category = _unitOfWork.Category.GetT(u => u.ID == id);
             if (category == null)
             {
                 return NotFound();
@@ -137,12 +173,17 @@ namespace BulkyWeb.Controllers
             return View(category);
         }
         [HttpPost, ActionName("DeleteCategory")] //Giving ActionName Explicity
-        public async Task<IActionResult> DeleteTest(Guid id)
+        public async Task<IActionResult> Delete(Guid id)
         {
             //**Using DB Context Directly -> Category? category = await _categoryRepo.Categories.FindAsync(id);
-            
-            /**Using the Category Repository**/
+
+            /**
+            Using the Category Repository
             Category? category = _categoryRepo.GetT(u => u.ID == id);
+            **/
+
+            //**Using Unit of Work**
+            Category? category = _unitOfWork.Category.GetT(u => u.ID == id);
             if (category == null)
             {
                 return NotFound();
@@ -150,9 +191,16 @@ namespace BulkyWeb.Controllers
             //**Using DB Context Directly ->  _categoryRepo.Categories.Remove(category);
             //**Using DB Context Directly -> await _categoryRepo.SaveChangesAsync();
 
-            /**Using the Category Repository**/
+            /**
+            Using the Category Repository
             _categoryRepo.Delete(category);
             _categoryRepo.Save();
+            **/
+
+            //**Using Unit of Work**
+            _unitOfWork.Category.Delete(category);
+            _unitOfWork.Save();
+
             TempData["success"] = "Category Deleted Successfully!!";
             return RedirectToAction("Index");
 
